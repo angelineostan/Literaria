@@ -12,4 +12,4 @@ Setup Flask
   
   2. Install extensions inside VS Code:
      - Python Debugger (Microsoft)
-     
+     <img width="712" height="235" alt="Screenshot 2025-08-21 174223" src="https://github.com/user-attachments/assets/cf362ec3-f6b3-4842-8859-3427fc5a9fbe" />
