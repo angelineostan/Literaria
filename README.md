@@ -14,7 +14,8 @@ Setup Flask
      - Python Debugger (Microsoft)
     
      <img width="712" height="235" alt="Screenshot 2025-08-21 174223" src="https://github.com/user-attachments/assets/cf362ec3-f6b3-4842-8859-3427fc5a9fbe" />
+     <"/n">
       
-     - Pylance
+     - Pylance (Microsoft)
    
      <img width="679" height="214" alt="Screenshot 2025-08-21 174420" src="https://github.com/user-attachments/assets/cd31a0a0-c57e-46c7-b2a0-d210076b4724" />
