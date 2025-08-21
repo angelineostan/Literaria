@@ -27,7 +27,7 @@ An Interactive and Adaptive Reading Literacy Platform for Student Engagement and
            - css                 (Folder)
              - style.css
            - images              (Folder)
-        - template               (Folder)
+        - templates              (Folder)
            - auth                (Folder)
              - student_login.html
              - student_signup.html
