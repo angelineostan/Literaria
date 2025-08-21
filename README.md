@@ -51,19 +51,19 @@ An Interactive and Adaptive Reading Literacy Platform for Student Engagement and
 3. Create a vitual environment
    - Type and Enter: ```python -m venv venv```
 
-Step 5: Install Flask
-1. Inside the virtual environment or the CMD
+**Step 5: Install Flask
+**1. Inside the virtual environment or the CMD
    - Enter this command: ```pip install flask```
      (if pip is not recognized, check if pip is installed by using this command: ```python -m pip --version```)
      (Make sure that you selected to Add Python to Path upon installation, it is to prevent this type of error)
      (Then you try again the ```pip install flask```)
 
-Step 6: Create a Flask File
-1. Inside the Literaria Folder, create a python file ```main.py```
+**Step 6: Create a Flask File
+**1. Inside the Literaria Folder, create a python file ```main.py```
 2. Next is to follow the code in the  ```main.py```
 3. Follow the rest of the codes in the the ```Template``` folder
 
-Step 7: Run the Flask File
+**Step 7: Run the Flask File**
 1. In the terminal
    Enter this command: ```python main.py```
 2. You should see something like this: ```* Running on http://127.0.0.1:5000```
