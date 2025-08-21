@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Custom animations and transitions */
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 50%;
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.logo-glow {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.mobile-menu-enter {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar-backdrop {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.747);
+}
+
+.book-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.book-icon:hover {
+    transform: rotate(-5deg) scale(1.1);
+}
+
+/* Custom gradient for active link */
+.active-link {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Hero Section Styles */
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/static/images/hero1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Staggered animation delays */
+.delay-100 {
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+    animation-fill-mode: both;
+}
