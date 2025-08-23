@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gidy - Select Your Role</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div
+        class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 flex items-center justify-center p-4">
+
+
+        <div class="max-w-4xl w-full">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    Welcome to <span class="text-indigo-600">Literaria</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Choose your role to get started with the perfect learning experience tailored just for you.
+                </p>
+            </div>
+
+            <!-- Role Selection Cards -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+
+                <!-- Teacher Role Card -->
+                <div class="group cursor-pointer">
+                    <div
+                        class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 p-8 border-2 border-transparent hover:border-indigo-300">
+                        <!-- Image Container -->
+                        <div
+                            class="w-48 h-48 mx-auto mb-6 bg-indigo-50 rounded-full flex items-center justify-center overflow-hidden">
+                            <img src="/static/images/teacher_role.jpg" alt="Teacher's Image">
+                        </div>
+
+                        <!-- Role Info -->
+                        <div class="text-center">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                                Teacher
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="/template/auth/student_login.html">
+
+                    <!-- Student Role Card -->
+                    <div class="group cursor-pointer">
+                        <div
+                            class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 p-8 border-2 border-transparent hover:border-purple-300">
+                            <!-- Image Container -->
+                            <div
+                                class="w-48 h-48 mx-auto mb-6 bg-purple-50 rounded-full flex items-center justify-center overflow-hidden">
+                                <img src="/static/images/student_role.jpg" alt="Student's Image">
+                            </div>
+
+                            <!-- Role Info -->
+                            <div class="text-center">
+                                <h3
+                                    class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-purple-600 transition-colors">
+                                    Student
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

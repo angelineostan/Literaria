@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literaria | Contact</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--External CSS-->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- JavaScript -->
+    <script src="/static/js/mobileMenu.js"></script>
+
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Literaria - Enhanced Navigation</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+
+    </head>
+
+    <body class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen">
+        <div class="container-fluid">
+            <!-- Enhanced Navigation Bar -->
+            <nav class="navbar-backdrop border-b border-gray-200/50 fixed w-full z-30 top-0 shadow-lg">
+                <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
+                    <!-- Enhanced Logo and Brand -->
+                    <a href="/" class="flex items-center space-x-3 group">
+                        <!-- Book Icon SVG -->
+                        <div class="book-icon">
+                            <svg class="h-10 w-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z" />
+                            </svg>
+                        </div>
+                        <span
+                            class="self-center text-2xl font-bold whitespace-nowrap logo-glow bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                            Literaria
+                        </span>
+                    </a>
+
+                    <!-- Enhanced Mobile menu button -->
+                    <button type="button"
+                        class="inline-flex items-center p-2 w-12 h-12 justify-center text-gray-500 rounded-xl md:hidden hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                        aria-controls="navbar-main" aria-expanded="false" id="mobile-menu-button">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Hamburger Icon -->
+                        <svg class="w-6 h-6 hamburger-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15" />
+                        </svg>
+                        <!-- Close Icon (hidden by default) -->
+                        <svg class="w-6 h-6 close-icon hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+
+                    <!-- Enhanced Navigation Links -->
+                    <div class="hidden w-full md:block md:w-auto" id="navbar-main">
+                        <ul
+                            class="font-medium flex flex-col p-6 md:p-0 mt-4 border border-gray-100/50 rounded-2xl bg-white/80  shadow-lg md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-transparent md:shadow-none">
+                            <li>
+                                <a href="/"
+                                    class="nav-link block py-3 px-4 rounded-lg hover:bg-blue-50 md:hover:bg-transparent md:p-2 transition-all duration-300">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/about"
+                                    class="nav-link block py-3 px-4 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 md:hover:bg-transparent md:p-2 transition-all duration-300">
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact"
+                                    class="nav-link active-link block py-3 px-4 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 md:hover:bg-transparent md:p-2 transition-all duration-300"
+                                    aria-current="page">
+                                    Contact
+                                </a>
+                            </li>
+                            <!-- CTA Buttons -->
+               
+                            <li class="mt-4 md:mt-0 md:ml-2">
+                                <a href="/signup"
+                                    class="block text-center py-3 px-6 text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Sign Up
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Spacer for fixed navbar -->
+            <div class="h-20"></div>
+
+            <!-- Contact Section -->
+            <section class="py-20 px-4">
+                <div class="max-w-7xl mx-auto">
+
+                    <!-- Section Header -->
+                    <div class="text-center mb-16">
+                        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get in Touch</h1>
+                        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Have questions about our literacy platform?
+                            We're here to help! Send us a message and we'll respond as soon as possible.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <!-- Contact Form -->
+                        <div class="bg-white rounded-2xl shadow-lg p-8">
+                            <form class="space-y-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full
+                                        Name</label>
+                                    <input type="text" id="name" name="name"
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                        placeholder="Enter your name">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email
+                                        Address</label>
+                                    <input type="email" id="email" name="email"
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                        placeholder="you@example.com">
+                                </div>
+
+                                <div>
+                                    <label for="message"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                    <textarea id="message" name="message" rows="5"
+                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                        placeholder="Your message here..."></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="space-y-8">
+                            <!-- Quick Contact Card -->
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-6">Quick Contact</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Email Us At</p>
+                                            <a href="mailto:contact@literaria.com"
+                                                class="text-blue-600 hover:text-blue-700">contact@literaria.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Call Us</p>
+                                            <p class="text-blue-600">(123) 456-7890</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Location</p>
+                                            <p class="text-gray-600">San Angel<br>San Jose, Antique 5700</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+
+
+
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white">
+            <div class="max-w-screen-xl mx-auto px-6 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="col-span-1 md:col-span-2">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <svg class="h-8 w-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1z" />
+                            </svg>
+                            <span class="text-2xl font-bold">Literaria</span>
+                        </div>
+                        <p class="text-gray-300 mb-6 max-w-md">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Mollitia, eaque voluptates. </p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Socials</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><a href="/books" class="hover:text-blue-400 transition-colors">Facebook</a></li>
+                            <li><a href="/authors" class="hover:text-blue-400 transition-colors">Instagram</a></li>
+                            <li><a href="/genres" class="hover:text-blue-400 transition-colors">Tweeter</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Support</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><a href="/help" class="hover:text-blue-400 transition-colors">Help Center</a></li>
+                            <li><a href="/contact" class="hover:text-blue-400 transition-colors">Contact Us</a></li>
+                            <li><a href="/privacy" class="hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                    <p>&copy; 2025 Literaria. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+
+    </body>
+
+    </html>
