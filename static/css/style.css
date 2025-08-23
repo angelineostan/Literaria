@@ -4,6 +4,8 @@ body {
     font-family: 'Outfit', sans-serif;
 }
 
+
+
 /* Custom animations and transitions */
 .nav-link {
     position: relative;
@@ -32,17 +34,43 @@ body {
 
 .mobile-menu-enter {
     animation: slideDown 0.3s ease-out;
+    transform-origin: top;
 }
 
 @keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-10px) scaleY(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+/* Mobile Menu Styles */
+#navbar-main {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#navbar-main.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+#navbar-main:not(.hidden) {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+    #navbar-main.hidden {
+        display: block;
+        opacity: 1;
+        transform: none;
     }
 }
 
