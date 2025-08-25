@@ -26,13 +26,20 @@ def role_login():
 def role_signup():
     return render_template('role/signup_role_select.html')
 
-@app.route('/signup_role_select')
+@app.route('/signup_role_student_select')
 def student_selected():
     return render_template('auth/student_signup.html')
+
+@app.route('/signup_role_teacher_select')
+def teacher_selected():
+    return render_template('auth/teacher_signup.html')
 
 @app.route('/role_select')
 def role_select():
     return render_template('role/role_select.html')
+@app.route('/forgot_password')
+def forgot_password():
+    return render_template('auth/forgotpassword.html')
     
 
 

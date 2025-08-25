@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Literaria | Select Your Role</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--External CSS-->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
@@ -54,7 +57,7 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-main">
                     <ul
                         class="font-medium flex flex-col p-6 md:p-0 mt-4 border border-gray-100/50 rounded-2xl bg-white/80  shadow-lg md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-transparent md:shadow-none">
-                    
+
 
                         <!-- CTA Buttons -->
                         <li class="mt-4 md:mt-0 md:ml-2">
@@ -88,27 +91,30 @@
             <!-- Role Selection Cards -->
             <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
 
-                <!-- Teacher Role Card -->
-                <div class="group cursor-pointer">
-                    <div
-                        class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 p-8 border-2 border-transparent hover:border-indigo-300">
-                        <!-- Image Container -->
+                <a href="/signup_role_teacher_select">
+                    <!-- Teacher Role Card -->
+                    <div class="group cursor-pointer">
                         <div
-                            class="w-48 h-48 mx-auto mb-6 bg-indigo-50 rounded-full flex items-center justify-center overflow-hidden">
-                            <img src="/static/images/teacher_role.jpg" alt="Teacher's Image">
-                        </div>
+                            class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 p-8 border-2 border-transparent hover:border-indigo-300">
+                            <!-- Image Container -->
+                            <div
+                                class="w-48 h-48 mx-auto mb-6 bg-indigo-50 rounded-full flex items-center justify-center overflow-hidden">
+                                <img src="/static/images/teacher_role.jpg" alt="Teacher's Image">
+                            </div>
 
-                        <!-- Role Info -->
-                        <div class="text-center">
-                            <h3
-                                class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition-colors">
-                                Teacher
-                            </h3>
+                            <!-- Role Info -->
+                            <div class="text-center">
+                                <h3
+                                    class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                                    Teacher
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <a href="/signup_role_select">
+                </a>
+
+                <a href="/signup_role_student_select">
                     <!-- Student Role Card -->
                     <div class="group cursor-pointer">
                         <div

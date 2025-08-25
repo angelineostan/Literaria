@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literaria | Adaptive Reading Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e8f4f8 100%);
+        }
+
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-icon.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            aspect-ratio: 3/4;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .story-illustration {
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-info {
+            height: 40%;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            background: white;
+        }
+
+        .heart-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .heart-icon:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .heart-icon.liked {
+            background: #ff6b9d;
+            color: white;
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .progress-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            z-index: 10;
+        }
+
+        .adaptive-indicator {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .reading-streak {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .comprehension-level {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: #e5e7eb;
+            stroke-width: 4;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: #10b981;
+            stroke-width: 4;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.5s ease;
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header with adaptive profile -->
+    <header class="p-6 pb-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Profile Section with Adaptive Data -->
+            <div class="flex items-center space-x-4">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-purple-400 to-blue-500 rounded-2xl flex items-center justify-center text-2xl relative">
+                    😊
+                    <div
+                        class="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs">
+                        👑
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-700">Howdy,</h1>
+                    <h2 class="text-xl font-bold text-gray-800">Emma</h2>
+                    <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-1">
+                            <span class="text-yellow-400">⭐</span>
+                            <span class="text-sm font-semibold text-gray-600" id="totalPoints">1,247</span>
+                        </div>
+                        <div class="comprehension-level">Level 3 Reader</div>
+                    </div>
+                    <div class="reading-streak pulse-animation">🔥 7-day streak!</div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="hidden md:flex space-x-4">
+                <div class="text-center">
+                    <div class="text-lg font-bold text-blue-600" id="booksRead">27</div>
+                    <div class="text-xs text-gray-500">Books Read</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-green-600" id="wordsLearned">156</div>
+                    <div class="text-xs text-gray-500">Words Learned</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-purple-600" id="comprehensionScore">87%</div>
+                    <div class="text-xs text-gray-500">Comprehension</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Icons -->
+    <nav class="px-6 mb-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-center space-x-4">
+                <div class="nav-icon bg-gradient-to-br from-pink-400 to-pink-500 text-white active"
+                    onclick="selectNav('dashboard')" data-section="dashboard">
+                    💖
+                </div>
+                <div class="nav-icon bg-gradient-to-br from-yellow-400 to-orange-500 text-white"
+                    onclick="selectNav('stories')" data-section="stories">
+                    📺
+                </div>
+                <div class="nav-icon bg-gradient-to-br from-pink-300 to-purple-400 text-white"
+                    onclick="selectNav('activities')" data-section="activities">
+                    🎨
+                </div>
+                <div class="nav-icon bg-gradient-to-br from-blue-400 to-purple-500 text-white"
+                    onclick="selectNav('reading')" data-section="reading">
+                    📖
+                </div>
+                <div class="nav-icon bg-gradient-to-br from-orange-400 to-red-500 text-white"
+                    onclick="selectNav('progress')" data-section="progress">
+                    📊
+                </div>
+                <div class="nav-icon bg-gradient-to-br from-purple-400 to-blue-500 text-white"
+                    onclick="selectNav('achievements')" data-section="achievements">
+                    🏆
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <div class="flex justify-center space-x-4 text-xs font-semibold text-gray-600">
+                    <span>Dashboard</span>
+                    <span>Stories</span>
+                    <span>Activities</span>
+                    <span>Reading</span>
+                    <span>Progress</span>
+                    <span>Awards</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-content" class="content-section active">
+                <!-- Adaptive Story Recommendations -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📚 Recommended for You</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                        <!-- Adaptive Story 1 -->
+                        <div class="story-card cursor-pointer" onclick="openStory('friendship', 3, 85)"
+                            data-difficulty="3" data-comprehension="85">
+                            <div class="story-illustration bg-gradient-to-br from-yellow-200 to-orange-300 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="relative">
+                                        <div class="w-20 h-16 bg-orange-400 rounded-t-3xl rounded-b-lg relative">
+                                            <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 text-2xl">😊
+                                            </div>
+                                            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 -rotate-12">
+                                                <div class="w-12 h-8 bg-blue-500 rounded-md relative">
+                                                    <div class="w-2 h-4 bg-yellow-400 absolute top-1 left-1 rounded-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="heart-icon" onclick="toggleFavorite(event, this)">🤍</div>
+                                <div class="difficulty-badge bg-green-100 text-green-800">Level 3</div>
+                                <div class="progress-badge">85% match</div>
+                                <div class="adaptive-indicator bg-blue-500 text-white">AI</div>
+                            </div>
+                            <div class="story-info">
+                                <h3 class="font-bold text-gray-800 text-sm mb-1">Friendship Adventures</h3>
+                                <p class="text-xs text-gray-600">Adaptive story • 15 min</p>
+                                <div class="text-yellow-400 text-xs mt-1">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+
+                        <!-- Comprehension Challenge -->
+                        <div class="story-card cursor-pointer" onclick="openStory('mystery', 4, 78)" data-difficulty="4"
+                            data-comprehension="78">
+                            <div class="story-illustration bg-gradient-to-br from-pink-300 to-purple-400 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="relative">
+                                        <div
+                                            class="w-16 h-16 bg-yellow-400 rounded-full relative border-8 border-yellow-500">
+                                            <div
+                                                class="absolute inset-2 bg-gray-300 rounded-full flex items-center justify-center">
+                                                <div class="w-6 h-6 bg-gray-600 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="absolute -bottom-2 -right-2 w-8 h-2 bg-yellow-600 rounded-full transform rotate-45">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="heart-icon" onclick="toggleFavorite(event, this)">🤍</div>
+                                <div class="difficulty-badge bg-yellow-100 text-yellow-800">Challenge</div>
+                                <div class="progress-badge">New!</div>
+                                <div class="adaptive-indicator bg-purple-500 text-white pulse-animation">🧠</div>
+                            </div>
+                            <div class="story-info">
+                                <h3 class="font-bold text-gray-800 text-sm mb-1">Detective Mystery</h3>
+                                <p class="text-xs text-gray-600">Interactive quiz • 20 min</p>
+                                <div class="text-yellow-400 text-xs mt-1">⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+
+                        <!-- Vocabulary Builder -->
+                        <div class="story-card cursor-pointer" onclick="openStory('vocabulary', 2, 92)"
+                            data-difficulty="2" data-comprehension="92">
+                            <div class="story-illustration bg-gradient-to-br from-blue-300 to-purple-400 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="relative">
+                                        <div class="w-20 h-16 bg-blue-600 rounded-lg relative">
+                                            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xl">🤓
+                                            </div>
+                                            <div class="absolute -top-4 left-2 text-sm">📝</div>
+                                            <div class="absolute -top-2 right-2 text-xs">✨</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="heart-icon" onclick="toggleFavorite(event, this)">🤍</div>
+                                <div class="difficulty-badge bg-blue-100 text-blue-800">Vocab</div>
+                                <div class="progress-badge">12 words</div>
+                                <div class="adaptive-indicator bg-green-500 text-white">📚</div>
+                            </div>
+                            <div class="story-info">
+                                <h3 class="font-bold text-gray-800 text-sm mb-1">Word Explorer</h3>
+                                <p class="text-xs text-gray-600">Learn & practice • 10 min</p>
+                                <div class="text-yellow-400 text-xs mt-1">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+
+                        <!-- Personalized Story -->
+                        <div class="story-card cursor-pointer" onclick="openStory('personal', 3, 95)"
+                            data-difficulty="3" data-comprehension="95">
+                            <div class="story-illustration bg-gradient-to-br from-green-200 to-blue-300 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="relative">
+                                        <div class="w-20 h-16 bg-green-500 rounded-lg relative">
+                                            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xl">😊
+                                            </div>
+                                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 text-2xl">👑
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="heart-icon" onclick="toggleFavorite(event, this)">🤍</div>
+                                <div class="difficulty-badge bg-pink-100 text-pink-800">For You</div>
+                                <div class="progress-badge">Perfect!</div>
+                                <div class="adaptive-indicator bg-pink-500 text-white float-animation">💖</div>
+                            </div>
+                            <div class="story-info">
+                                <h3 class="font-bold text-gray-800 text-sm mb-1">Emma's Adventure</h3>
+                                <p class="text-xs text-gray-600">Personalized • 18 min</p>
+                                <div class="text-yellow-400 text-xs mt-1">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Today's Reading Goal -->
+                <div class="bg-white rounded-3xl p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">🎯 Today's Reading Goal</h3>
+                        <div class="progress-ring">
+                            <svg width="60" height="60">
+                                <circle class="progress-ring-bg" cx="30" cy="30" r="26"></circle>
+                                <circle class="progress-ring-fill" cx="30" cy="30" r="26" stroke-dasharray="163.36"
+                                    stroke-dashoffset="49.01" id="dailyProgress"></circle>
+                            </svg>
+                            <div
+                                class="absolute inset-0 flex items-center justify-center text-sm font-bold text-green-600">
+                                70%</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center p-4 bg-blue-50 rounded-2xl">
+                            <div class="text-2xl mb-2">📖</div>
+                            <div class="text-lg font-bold text-blue-600" id="todayBooks">2/3</div>
+                            <div class="text-xs text-gray-600">Stories</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-2xl">
+                            <div class="text-2xl mb-2">⏱️</div>
+                            <div class="text-lg font-bold text-green-600" id="todayTime">21/30</div>
+                            <div class="text-xs text-gray-600">Minutes</div>
+                        </div>
+                        <div class="text-center p-4 bg-purple-50 rounded-2xl">
+                            <div class="text-2xl mb-2">🔤</div>
+                            <div class="text-lg font-bold text-purple-600" id="todayWords">8/10</div>
+                            <div class="text-xs text-gray-600">New Words</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stories Section -->
+            <div id="stories-content" class="content-section">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📖 Interactive Stories</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-3xl p-6">
+                            <h4 class="font-bold text-gray-800 mb-2">📚 Story Library</h4>
+                            <p class="text-gray-600 text-sm mb-4">Choose from 500+ adaptive stories</p>
+                            <button
+                                class="w-full bg-blue-500 text-white py-3 rounded-2xl font-semibold hover:bg-blue-600 transition-colors">
+                                Browse Stories
+                            </button>
+                        </div>
+                        <div class="bg-white rounded-3xl p-6">
+                            <h4 class="font-bold text-gray-800 mb-2">🎭 Interactive Tales</h4>
+                            <p class="text-gray-600 text-sm mb-4">Make choices that change the story</p>
+                            <button
+                                class="w-full bg-purple-500 text-white py-3 rounded-2xl font-semibold hover:bg-purple-600 transition-colors">
+                                Start Adventure
+                            </button>
+                        </div>
+                        <div class="bg-white rounded-3xl p-6">
+                            <h4 class="font-bold text-gray-800 mb-2">🎨 Create Stories</h4>
+                            <p class="text-gray-600 text-sm mb-4">Write and illustrate your own tales</p>
+                            <button
+                                class="w-full bg-green-500 text-white py-3 rounded-2xl font-semibold hover:bg-green-600 transition-colors">
+                                Create Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activities Section -->
+            <div id="activities-content" class="content-section">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">🎨 Learning Activities</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-3xl p-6">
+                            <div class="text-4xl mb-4 text-center">🎯</div>
+                            <h4 class="font-bold text-gray-800 mb-2 text-center">Comprehension Quiz</h4>
+                            <p class="text-gray-600 text-sm text-center mb-4">Test your understanding</p>
+                            <div
+                                class="bg-green-100 text-green-800 text-center py-2 px-4 rounded-full text-sm font-semibold">
+                                87% Average Score
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-3xl p-6">
+                            <div class="text-4xl mb-4 text-center">🔤</div>
+                            <h4 class="font-bold text-gray-800 mb-2 text-center">Vocabulary Builder</h4>
+                            <p class="text-gray-600 text-sm text-center mb-4">Learn new words daily</p>
+                            <div
+                                class="bg-blue-100 text-blue-800 text-center py-2 px-4 rounded-full text-sm font-semibold">
+                                156 Words Learned
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-3xl p-6">
+                            <div class="text-4xl mb-4 text-center">🎵</div>
+                            <h4 class="font-bold text-gray-800 mb-2 text-center">Phonics Games</h4>
+                            <p class="text-gray-600 text-sm text-center mb-4">Practice sounds and letters</p>
+                            <div
+                                class="bg-purple-100 text-purple-800 text-center py-2 px-4 rounded-full text-sm font-semibold">
+                                Level 5 Unlocked
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Section -->
+            <div id="reading-content" class="content-section">
+                <div class="bg-white rounded-3xl p-8 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-6">📖 Continue Reading</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-2xl">
+                            <div
+                                class="w-16 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white text-2xl">
+                                📚</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-gray-800">The Magic Forest</h4>
+                                <p class="text-sm text-gray-600">Chapter 3: The Friendly Dragon</p>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">65% complete</p>
+                            </div>
+                            <button
+                                class="bg-blue-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progress-content" class="content-section">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-3xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Reading Analytics</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Comprehension Level</span>
+                                    <span class="font-semibold">87%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-green-500 h-3 rounded-full" style="width: 87%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Reading Speed</span>
+                                    <span class="font-semibold">125 WPM</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-blue-500 h-3 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Vocabulary Growth</span>
+                                    <span class="font-semibold">+12 this week</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-purple-500 h-3 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-3xl p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Weekly Goals</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-xl">
+                                <span class="text-green-600 font-bold">4/5 ✓</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-xl">
+                                <span class="text-sm font-semibold">Learn 15 words</span>
+                                <span class="text-blue-600 font-bold">12/15 📚</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-xl">
+                                <span class="text-sm font-semibold">Complete 3 quizzes</span>
+                                <span class="text-purple-600 font-bold">3/3 ✅</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div id="achievements-content" class="content-section">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">🏆 Your Achievements</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div
+                            class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl p-6 text-white text-center">
+                            <div class="text-4xl mb-3">🏆</div>
+                            <h4 class="font-bold text-lg mb-1">Reading Champion</h4>
+                            <p class="text-sm opacity-90">Read 25+ stories</p>
+                            <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">
+                                Unlocked!
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl p-6 text-white text-center">
+                            <div class="text-4xl mb-3">🧠</div>
+                            <h4 class="font-bold text-lg mb-1">Smart Cookie</h4>
+                            <p class="text-sm opacity-90">95%+ quiz accuracy</p>
+                            <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">
+                                Earned Today!
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gradient-to-r from-purple-400 to-pink-500 rounded-3xl p-6 text-white text-center">
+                            <div class="text-4xl mb-3">🔥</div>
+                            <h4 class="font-bold text-lg mb-1">Streak Master</h4>
+                            <p class="text-sm opacity-90">7-day reading streak</p>
+                            <div class="mt-3 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">
+                                Active!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Story Detail Modal -->
+    <div id="storyModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800" id="modalTitle">Story Details</h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            </div>
+
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+
+            <div class="flex space-x-4 mt-6">
+                <button onclick="startReading()"
+                    class="flex-1 bg-blue-500 text-white py-3 rounded-2xl font-semibold hover:bg-blue-600 transition-colors">
+                    🚀 Start Reading
+                </button>
+                <button onclick="closeModal()"
+                    class="px-6 py-3 bg-gray-200 text-gray-700 rounded-2xl font-semibold hover:bg-gray-300 transition-colors">
+                    Maybe Later
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading Session Modal -->
+    <div id="readingModal" class="modal">
+        <div class="modal-content max-w-4xl">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-2xl font-bold text-gray-800" id="readingTitle">Reading Session</h2>
+                    <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold"
+                        id="readingLevel">
+                        Level 3
+                    </div>
+                </div>
+                <button onclick="closeReadingModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="text-sm font-semibold text-gray-600">Reading Progress</div>
+                    <div class="text-sm font-semibold text-gray-800" id="readingProgress">0%</div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full transition-all duration-500" id="readingProgressBar"
+                        style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="readingContent" class="prose max-w-none mb-6">
+                <!-- Story content will be dynamically loaded -->
+            </div>
+
+            <div class="flex justify-between items-center">
+                <button onclick="previousPage()"
+                    class="bg-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-semibold hover:bg-gray-300 transition-colors"
+                    id="prevBtn" disabled>
+                    ← Previous
+                </button>
+                <div class="flex space-x-2" id="comprehensionCheck">
+                    <!-- Comprehension questions will appear here -->
+                </div>
+                <button onclick="nextPage()"
+                    class="bg-blue-500 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-blue-600 transition-colors"
+                    id="nextBtn">
+                    Next →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <script>
+        // Student data tracking
+        let studentData = {
+            level: 3,
+            comprehensionScore: 87,
+            readingSpeed: 125,
+            wordsLearned: 156,
+            booksRead: 27,
+            streak: 7,
+            points: 1247,
+            dailyGoals: {
+                stories: { current: 2, target: 3 },
+                minutes: { current: 21, target: 30 },
+                words: { current: 8, target: 10 }
+            }
+        };
+
+        // Story database with adaptive content
+        const storyDatabase = {
+            'friendship': {
+                title: 'Friendship Adventures',
+                difficulty: 3,
+                content: [
+                    {
+                        text: "Emma and her best friend Maya discovered a magical garden behind the old library.",
+                        comprehension: "Who discovered the magical garden?",
+                        options: ["Emma and Maya", "Only Emma", "Only Maya", "The librarian"],
+                        correct: 0
+                    },
+                    {
+                        text: "The garden was filled with talking flowers that needed their help to solve a mystery.",
+                        comprehension: "What did the flowers need help with?",
+                        options: ["Watering", "Solving a mystery", "Singing songs", "Growing taller"],
+                        correct: 1
+                    }
+                ],
+                vocabulary: ["magical", "discovered", "mystery"],
+                skills: ["reading comprehension", "friendship themes", "problem solving"]
+            },
+            'mystery': {
+                title: 'Detective Mystery',
+                difficulty: 4,
+                content: [
+                    {
+                        text: "Detective Sam received a peculiar letter with strange symbols and a mysterious map.",
+                        comprehension: "What made the letter peculiar?",
+                        options: ["It was wet", "Strange symbols", "Wrong address", "No stamp"],
+                        correct: 1
+                    }
+                ],
+                vocabulary: ["peculiar", "symbols", "mysterious"],
+                skills: ["critical thinking", "problem solving", "attention to detail"]
+            },
+            'vocabulary': {
+                title: 'Word Explorer',
+                difficulty: 2,
+                content: [
+                    {
+                        text: "The enormous elephant elegantly entered the emerald forest.",
+                        comprehension: "Which word means 'very large'?",
+                        options: ["Elegantly", "Enormous", "Emerald", "Entered"],
+                        correct: 1
+                    }
+                ],
+                vocabulary: ["enormous", "elegantly", "emerald"],
+                skills: ["vocabulary building", "alliteration", "descriptive language"]
+            }
+        };
+
+        let currentStory = null;
+        let currentPage = 0;
+        let currentSection = 'dashboard';
+
+        // Navigation functionality
+        function selectNav(section) {
+            // Remove active class from all nav icons
+            document.querySelectorAll('.nav-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+
+            // Add active class to clicked icon
+            event.target.classList.add('active');
+
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(section + '-content').classList.add('active');
+            currentSection = section;
+
+            const messages = {
+                dashboard: "Welcome to your dashboard! 💖",
+                stories: "Explore amazing stories! 📖",
+                activities: "Time for fun activities! 🎨",
+                reading: "Continue your reading journey! 📚",
+                progress: "Check your amazing progress! 📊",
+                achievements: "Look at all your achievements! 🏆"
+            };
+
+            showToast(messages[section], 'info');
+            updateAdaptiveContent();
+        }
+
+        // Story interaction functionality
+        function openStory(storyId, difficulty, comprehension) {
+            currentStory = storyDatabase[storyId];
+            if (!currentStory) return;
+
+            const modal = document.getElementById('storyModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            modalTitle.textContent = currentStory.title;
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                            Level ${difficulty}
+                        </div>
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                            ${comprehension}% Match
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-2xl p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">What you'll learn:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${currentStory.skills.map(skill =>
+                `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-lg text-sm">${skill}</span>`
+            ).join('')}
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 rounded-2xl p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">New vocabulary:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${currentStory.vocabulary.map(word =>
+                `<span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-lg text-sm font-semibold">${word}</span>`
+            ).join('')}
+                        </div>
+                    </div>
+                    <div class="text-center p-4 bg-yellow-50 rounded-2xl">
+                        <div class="text-2xl mb-2">⏱️</div>
+                        <div class="text-sm text-gray-600">Estimated reading time: ${Math.ceil(currentStory.content.length * 2)} minutes</div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function startReading() {
+            closeModal();
+            if (!currentStory) return;
+
+            currentPage = 0;
+            const readingModal = document.getElementById('readingModal');
+            const readingTitle = document.getElementById('readingTitle');
+            const readingLevel = document.getElementById('readingLevel');
+
+            readingTitle.textContent = currentStory.title;
+            readingLevel.textContent = `Level ${currentStory.difficulty}`;
+
+            loadPage();
+            readingModal.classList.add('active');
+        }
+
+        function loadPage() {
+            if (!currentStory || currentPage >= currentStory.content.length) return;
+
+            const content = currentStory.content[currentPage];
+            const readingContent = document.getElementById('readingContent');
+            const comprehensionCheck = document.getElementById('comprehensionCheck');
+
+            readingContent.innerHTML = `
+                <div class="text-lg leading-relaxed text-gray-800 mb-6">
+                    ${content.text}
+                </div>
+                <div class="bg-blue-50 rounded-2xl p-4 mb-4">
+                    <h4 class="font-semibold text-blue-800 mb-3">${content.comprehension}</h4>
+                    <div class="space-y-2">
+                        ${content.options.map((option, index) => `
+                            <label class="flex items-center p-3 bg-white rounded-xl cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="comprehension" value="${index}" class="mr-3">
+                                <span>${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            updateReadingProgress();
+            updateNavigationButtons();
+        }
+
+        function nextPage() {
+            if (!currentStory) return;
+
+            // Check comprehension answer
+            const selectedAnswer = document.querySelector('input[name="comprehension"]:checked');
+            if (selectedAnswer) {
+                const isCorrect = parseInt(selectedAnswer.value) === currentStory.content[currentPage].correct;
+                if (isCorrect) {
+                    showToast("Great job! Correct answer! 🎉", 'success');
+                    updateStudentProgress(5);
+                } else {
+                    showToast("Good try! Let's review that section. 📚", 'warning');
+                }
+            }
+
+            currentPage++;
+            if (currentPage >= currentStory.content.length) {
+                completeStory();
+            } else {
+                loadPage();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                loadPage();
+            }
+        }
+
+        function completeStory() {
+            showToast("Story completed! Great reading! 🌟", 'success');
+            updateStudentProgress(25);
+            updateDailyGoals();
+            closeReadingModal();
+        }
+
+        function updateReadingProgress() {
+            const progress = ((currentPage + 1) / currentStory.content.length) * 100;
+            document.getElementById('readingProgress').textContent = Math.round(progress) + '%';
+            document.getElementById('readingProgressBar').style.width = progress + '%';
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.disabled = currentPage === 0;
+            prevBtn.className = currentPage === 0 ?
+                'bg-gray-200 text-gray-400 px-6 py-3 rounded-2xl font-semibold cursor-not-allowed' :
+                'bg-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-semibold hover:bg-gray-300 transition-colors';
+
+            nextBtn.textContent = currentPage >= currentStory.content.length - 1 ? 'Complete 🎉' : 'Next →';
+        }
+
+        function updateStudentProgress(points) {
+            studentData.points += points;
+            document.getElementById('totalPoints').textContent = studentData.points.toLocaleString();
+        }
+
+        function updateDailyGoals() {
+            studentData.dailyGoals.stories.current = Math.min(
+                studentData.dailyGoals.stories.current + 1,
+                studentData.dailyGoals.stories.target
+            );
+
+            document.getElementById('todayBooks').textContent =
+                `${studentData.dailyGoals.stories.current}/${studentData.dailyGoals.stories.target}`;
+        }
+
+        function toggleFavorite(event, element) {
+            event.stopPropagation();
+            const isLiked = element.classList.contains('liked');
+
+            if (isLiked) {
+                element.classList.remove('liked');
+                element.textContent = '🤍';
+                showToast("Removed from favorites", 'info');
+            } else {
+                element.classList.add('liked');
+                element.textContent = '❤️';
+                element.style.animation = 'bounce 0.5s ease';
+                setTimeout(() => element.style.animation = '', 500);
+                showToast("Added to favorites! 💖", 'success');
+            }
+        }
+
+        function updateAdaptiveContent() {
+            // Simulate adaptive content based on student performance
+            if (currentSection === 'dashboard') {
+                adaptStoryRecommendations();
+            }
+        }
+
+        function adaptStoryRecommendations() {
+            // Adaptive algorithm based on comprehension score and reading level
+            const cards = document.querySelectorAll('.story-card');
+            cards.forEach(card => {
+                const difficulty = parseInt(card.dataset.difficulty);
+                const comprehension = parseInt(card.dataset.comprehension);
+
+                if (studentData.comprehensionScore > 85 && difficulty < studentData.level + 1) {
+                    // Recommend higher difficulty for high performers
+                    const indicator = card.querySelector('.adaptive-indicator');
+                    if (indicator) {
+                        indicator.style.background = '#10b981';
+                        indicator.textContent = '⬆️';
+                    }
+                }
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('storyModal').classList.remove('active');
+        }
+
+        function closeReadingModal() {
+            document.getElementById('readingModal').classList.remove('active');
+            currentStory = null;
+            currentPage = 0;
+        }
+
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-green-400',
+                info: 'bg-blue-400',
+                warning: 'bg-yellow-400',
+                error: 'bg-red-400'
+            };
+
+            toast.className = `${colors[type]} text-white p-4 rounded-2xl shadow-lg font-semibold transform translate-x-full transition-all duration-300 max-w-sm`;
+            toast.textContent = message;
+
+            document.getElementById('toast-container').appendChild(toast);
+
+            setTimeout(() => toast.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize adaptive features
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAdaptiveContent();
+            setTimeout(() => showToast("Welcome back, Emma! Ready to learn? 🌟", 'success'), 1000);
+
+            // Simulate real-time progress updates
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const encouragements = [
+                        "You're doing amazing! Keep it up! 🌟",
+                        "Great reading progress today! 📚",
+                        "Your vocabulary is growing! 🔤",
+                        "Reading streak going strong! 🔥"
+                    ];
+                    const message = encouragements[Math.floor(Math.random() * encouragements.length)];
+                    showToast(message, 'success');
+                }
+            }, 45000);
+        });
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function (event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
